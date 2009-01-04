@@ -80,11 +80,23 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 {
 	// To set the status bar as black, use the following:
 	// application.statusBarStyle = UIStatusBarStyleBlackOpaque;
-
+	
+	// create window 
+    window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	
 	// this helps in debugging, so that you know "exactly" where your views are placed;
 	// if you see "red", you are looking at the bare window, otherwise use black
 	// window.backgroundColor = [UIColor redColor];
 	
+	window.backgroundColor = [UIColor blackColor];
+
+	// set up main view navigation controller
+    MainViewController *navController = [[MainViewController alloc] init];
+	
+	// create a navigation controller using the new controller
+	navigationController = [[UINavigationController alloc] initWithRootViewController:navController];
+	[navController release];
+
 	// add the navigation controller's view to the window
 	[window addSubview: navigationController.view];
 	[window makeKeyAndVisible];

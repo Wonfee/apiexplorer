@@ -132,19 +132,22 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
 	// starting the load, show the activity indicator in the status bar
-	[UIApplication sharedApplication].isNetworkActivityIndicatorVisible = YES;
+	//[UIApplication sharedApplication].isNetworkActivityIndicatorVisible = YES;
+	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
 	// finished loading, hide the activity indicator in the status bar
-	[UIApplication sharedApplication].isNetworkActivityIndicatorVisible = NO;
+	//[UIApplication sharedApplication].isNetworkActivityIndicatorVisible = NO;
+	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
 	// load error, hide the activity indicator in the status bar
-	[UIApplication sharedApplication].isNetworkActivityIndicatorVisible = NO;
+	//[UIApplication sharedApplication].isNetworkActivityIndicatorVisible = NO;
+	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
 	// report the error inside the webview
 	NSString* errorString = [NSString stringWithFormat:

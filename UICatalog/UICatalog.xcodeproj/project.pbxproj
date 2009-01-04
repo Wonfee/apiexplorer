@@ -19,7 +19,6 @@
 		5319929B0DCBAE2A00530CD7 /* CellTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 531992950DCBAE2A00530CD7 /* CellTextView.m */; };
 		5319929C0DCBAE2A00530CD7 /* SourceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 531992960DCBAE2A00530CD7 /* SourceCell.m */; };
 		5319929D0DCBAE2A00530CD7 /* DisplayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 531992980DCBAE2A00530CD7 /* DisplayCell.m */; };
-		531992A70DCBAE7300530CD7 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 531992A30DCBAE7300530CD7 /* MainWindow.xib */; };
 		531992A80DCBAE7300530CD7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 531992A50DCBAE7300530CD7 /* Localizable.strings */; };
 		531BC18E0DABE5FE0090C770 /* EditableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 531BC18C0DABE5FE0090C770 /* EditableTableViewCell.m */; };
 		5348C5BE0DB55CE800E8144A /* SearchBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5348C5BC0DB55CE800E8144A /* SearchBarController.m */; };
@@ -77,7 +76,6 @@
 		531992970DCBAE2A00530CD7 /* SourceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SourceCell.h; path = TableCells/SourceCell.h; sourceTree = "<group>"; };
 		531992980DCBAE2A00530CD7 /* DisplayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DisplayCell.m; path = TableCells/DisplayCell.m; sourceTree = "<group>"; };
 		531992990DCBAE2A00530CD7 /* CellTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CellTextField.h; path = TableCells/CellTextField.h; sourceTree = "<group>"; };
-		531992A40DCBAE7300530CD7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
 		531992A60DCBAE7300530CD7 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		531BC18C0DABE5FE0090C770 /* EditableTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EditableTableViewCell.m; path = TableCells/EditableTableViewCell.m; sourceTree = "<group>"; };
 		531BC18D0DABE5FE0090C770 /* EditableTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditableTableViewCell.h; path = TableCells/EditableTableViewCell.h; sourceTree = "<group>"; };
@@ -188,7 +186,6 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				531992A30DCBAE7300530CD7 /* MainWindow.xib */,
 				531992A50DCBAE7300530CD7 /* Localizable.strings */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 			);
@@ -358,7 +355,6 @@
 				53C36FD10D786A6A00E6AABE /* orangeslide.png in Resources */,
 				53C370D20D787C5400E6AABE /* Icon.png in Resources */,
 				537E74AC0D78CBFE00FD5536 /* UIButton_custom.png in Resources */,
-				531992A70DCBAE7300530CD7 /* MainWindow.xib in Resources */,
 				531992A80DCBAE7300530CD7 /* Localizable.strings in Resources */,
 				530986800DE753E300CC7C10 /* blueButton.png in Resources */,
 				53DD76C30E12CB670026169A /* 12-6AM.png in Resources */,
@@ -403,14 +399,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		531992A30DCBAE7300530CD7 /* MainWindow.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				531992A40DCBAE7300530CD7 /* en */,
-			);
-			name = MainWindow.xib;
-			sourceTree = "<group>";
-		};
 		531992A50DCBAE7300530CD7 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (

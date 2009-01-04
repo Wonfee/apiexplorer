@@ -68,11 +68,31 @@ static NSString *kCellIdentifier = @"MyIdentifier";
 
 @synthesize myTableView;
 
-- (void)awakeFromNib
+- (id)init
+{
+	if (self = [super init])
+	{		
+		// this title will appear in the navigation bar
+		self.title = NSLocalizedString(@"UICatalogTitle", @"");
+		
+		// construct the array of page descriptions we will use (each desc is a dictionary)
+		//
+		menuList = [[NSMutableArray alloc] init];
+	}
+	return self;
+}
+
+-(void)loadView
 {	
-	// construct the array of page descriptions we will use (each desc is a dictionary)
+	// setup our parent content view and embed it this view controller
+	// having a generic contentView (as opposed to UITableView taking up the entire view controller)
+	// makes your UI design more flexible as you can add more subviews later
 	//
-	menuList = [[NSMutableArray alloc] init];
+	UIView *contentView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
+	self.view = contentView;
+	[contentView release];
+	
+	self.view.autoresizesSubviews = YES;
 	
 	// for showing various UIButtons:
 	ButtonsViewController *buttonsViewController = [[ButtonsViewController alloc] init];
@@ -175,6 +195,19 @@ static NSString *kCellIdentifier = @"MyIdentifier";
 	temporaryBarButtonItem.title = @"Back";
 	self.navigationItem.backBarButtonItem = temporaryBarButtonItem;
 	[temporaryBarButtonItem release];
+
+	// finally create a our table, its contents will be populated by "menuList" using the UITableView delegate methods
+	myTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+	myTableView.delegate = self;
+	myTableView.dataSource = self;
+	myTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+	
+	// setup our list view to autoresizing in case we decide to support autorotation along the other UViewControllers
+	myTableView.autoresizesSubviews = YES;
+	myTableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+	
+	[myTableView reloadData];	// populate our table's data
+	[self.view addSubview: myTableView];
 }
 
 - (void)dealloc
