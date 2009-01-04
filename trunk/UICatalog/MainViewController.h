@@ -50,7 +50,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @interface MainViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 {
 	NSMutableArray			*menuList;
-	IBOutlet UITableView	*myTableView;
+	UITableView	*myTableView;
 }
 
 @property (nonatomic, retain) UITableView *myTableView;

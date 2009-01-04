@@ -50,8 +50,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 @interface AppDelegate : NSObject <UIApplicationDelegate>
 {
-    IBOutlet UIWindow				*window;
-	IBOutlet UINavigationController	*navigationController;
+    UIWindow				*window;
+	UINavigationController	*navigationController;
 }
 
 @property (nonatomic, retain) UIWindow *window;
