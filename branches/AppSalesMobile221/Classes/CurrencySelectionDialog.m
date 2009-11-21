@@ -80,8 +80,12 @@
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:CellIdentifier] autorelease];
     }
-	
-	cell.textLabel.text = [[self.sortedCurrencies objectAtIndex:[indexPath row]] objectForKey:@"localizedName"];
+	if ( [cell respondsToSelector:@selector(setText:)] ) {	
+		[cell setText:[[self.sortedCurrencies objectAtIndex:[indexPath row]] objectForKey:@"localizedName"]];
+	}
+	else {
+		cell.textLabel.text = [[self.sortedCurrencies objectAtIndex:[indexPath row]] objectForKey:@"localizedName"];
+	}
 	
     return cell;
 }

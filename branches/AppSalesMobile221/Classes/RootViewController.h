@@ -29,35 +29,36 @@ AppSalesMobile
 */
 
 #import <UIKit/UIKit.h>
-@class Day;
-@class DaysController;
-@class WeeksController;
-@class SettingsViewController;
+@class Day, DaysController, WeeksController, SettingsViewController, StatisticsViewController, ReviewsController;
 
-@interface RootViewController : UIViewController {
+@interface RootViewController : UITableViewController {
 	
-	NSMutableDictionary *days;
-	NSMutableDictionary *weeks;
+	UIActivityIndicatorView *activityIndicator;
+	UILabel *statusLabel;
 	
-	BOOL isRefreshing;
-	IBOutlet UIProgressView *progressView;
-	IBOutlet DaysController *daysController;
-	IBOutlet WeeksController *weeksController;
-	IBOutlet SettingsViewController *settingsController;
-	IBOutlet UITableView *tableView;
+	DaysController *daysController;
+	WeeksController *weeksController;
+	SettingsViewController *settingsController;
+	StatisticsViewController *statisticsController;
+	ReviewsController *reviewsController;
 	
-	BOOL changeDone;
+	UIView *dailyTrendView;
+	UIView *weeklyTrendView;
 }
 
-@property (retain) NSMutableDictionary *days;
-@property (retain) NSMutableDictionary *weeks;
+@property (nonatomic, retain) UIActivityIndicatorView *activityIndicator;
+@property (nonatomic, retain) UILabel *statusLabel;
+@property (nonatomic, retain) DaysController *daysController;
+@property (nonatomic, retain) WeeksController *weeksController;
+@property (nonatomic, retain) SettingsViewController *settingsController;
+@property (nonatomic, retain) StatisticsViewController *statisticsController;
+@property (nonatomic, retain) ReviewsController *reviewsController;
+@property (nonatomic, retain) UIView *dailyTrendView;
+@property (nonatomic, retain) UIView *weeklyTrendView;
 
-- (IBAction)downloadReports:(id)sender;
-- (void)setProgress:(NSNumber *)progress;
-- (void)deleteDay:(Day *)dayToDelete;
-- (void)refreshDayList;
-- (void)refreshWeekList;
-- (void)saveData;
-- (NSString *)docPath;
+- (void)updateProgress;
+- (void)refreshDailyTrend;
+- (void)refreshWeeklyTrend;
+- (UIImage *)sparklineForReports:(NSArray *)days;
 
 @end

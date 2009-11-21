@@ -30,6 +30,7 @@
 
 #import "AppSalesMobileAppDelegate.h"
 #import "RootViewController.h"
+#import "Day.h"
 
 
 @implementation AppSalesMobileAppDelegate
@@ -38,9 +39,15 @@
 @synthesize navigationController;
 
 
-- (void)applicationDidFinishLaunching:(UIApplication *)application {
+- (void)applicationDidFinishLaunching:(UIApplication *)application 
+{
+	self.window = [[[UIWindow alloc] initWithFrame:CGRectMake(0,0,320,480)] autorelease];
+	RootViewController *rootViewController = [[[RootViewController alloc] initWithStyle:UITableViewStyleGrouped] autorelease];
+	self.navigationController = [[[UINavigationController alloc] initWithRootViewController:rootViewController] autorelease];
+	if ( [navigationController respondsToSelector:@selector(setToolbarHidden:)] ) {
+		navigationController.toolbarHidden = NO;
+	}
 	
-	// Configure and show the window
 	[window addSubview:[navigationController view]];
 	[window makeKeyAndVisible];
 }
@@ -52,7 +59,8 @@
 }
 
 
-- (void)dealloc {
+- (void)dealloc 
+{
 	[navigationController release];
 	[window release];
 	[super dealloc];

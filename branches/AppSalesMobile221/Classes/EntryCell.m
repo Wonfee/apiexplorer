@@ -37,7 +37,11 @@
 
 - (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier 
 {
+#ifdef COMPILE_OS221
     if (self = [super initWithFrame:frame reuseIdentifier:reuseIdentifier]) {
+#else
+	if (self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier]) {
+#endif
 		iconView = [[[UIImageView alloc] initWithFrame:CGRectMake(6,6,32,32)] autorelease];
 		descriptionLabel = [[[UILabel alloc] initWithFrame:CGRectMake(45, 0, 270, 44)] autorelease];
 		descriptionLabel.font = [UIFont systemFontOfSize:15.0];

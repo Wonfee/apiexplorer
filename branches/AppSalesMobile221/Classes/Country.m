@@ -113,6 +113,28 @@
 	return sum;
 }
 
+- (int)totalUnitsForApp:(NSString *)app
+{
+	if (app == nil)
+		return [self totalUnits];
+	int sum = 0;
+	for (Entry *e in self.entries) {
+		if ((e.transactionType == 1) && ([e.productName isEqual:app]))
+			sum += [e units];
+	}
+	return sum;
+}
+
+- (int)totalUnits
+{
+	int sum = 0;
+	for (Entry *e in self.entries) {
+		if (e.transactionType == 1)
+			sum += [e units];
+	}
+	return sum;
+}
+
 - (NSArray *)allProductNames
 {
 	NSMutableSet *names = [NSMutableSet set];
