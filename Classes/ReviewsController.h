@@ -14,6 +14,10 @@
 	NSArray *sortedApps;
 	UILabel *statusLabel;
 	UIActivityIndicatorView *activityIndicator;
+#ifdef COMPILE_OS221
+	UIToolbar *toolbar;
+#endif
+
 }
 
 @property (nonatomic, retain) NSArray *sortedApps;

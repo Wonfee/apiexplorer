@@ -53,7 +53,6 @@
 - (void)loadView
 {
 	[super loadView];
-	
 	self.activityIndicator = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite] autorelease];
 	UIBarButtonItem *progressItem = [[[UIBarButtonItem alloc] initWithCustomView:activityIndicator] autorelease];
 	
@@ -75,12 +74,12 @@
 	statusLabel.text = @"";
 	UIBarButtonItem *statusItem = [[[UIBarButtonItem alloc] initWithCustomView:statusLabel] autorelease];
 #ifdef COMPILE_OS221
-	UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0, 416.0, 320.0, 44.0)];
-//	toolbar.frame = CGRectMake(0.0, 416.0, 320.0, 44.0);
+	UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0, 328.0, 320.0, 44.0)];
 	toolbar.contentMode = UIViewContentModeScaleToFill;
 	toolbar.items = [NSArray arrayWithObjects:refreshItem, flexSpaceItem, statusItem, flexSpaceItem, progressItem, nil];
 //	[toolbar sizeToFit];
 	[self.view addSubview:toolbar];
+	self.navigationController.tabBarItem = [NSArray arrayWithObjects:refreshItem, flexSpaceItem, statusItem, flexSpaceItem, progressItem, nil];
 #else	
 	self.toolbarItems = [NSArray arrayWithObjects:refreshItem, flexSpaceItem, statusItem, flexSpaceItem, progressItem, nil];
 #endif	
