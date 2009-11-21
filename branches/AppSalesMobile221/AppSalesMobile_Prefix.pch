@@ -8,3 +8,11 @@
 #endif
 
 #define COMPILE_OS221
+
+#ifdef DEBUG_BUILD
+#define DEBUGLOG(x) x
+#define LogMethod()	NSLog(@"%@ %@", self, NSStringFromSelector(_cmd))
+#else
+#define DEBUGLOG(x)
+#define LogMethod()	
+#endif

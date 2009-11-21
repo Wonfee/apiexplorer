@@ -18,6 +18,19 @@
 
 @synthesize sortedApps, statusLabel, activityIndicator;
 
+#ifdef COMPILE_OS221
+- (id)initWithStyle:(UITableViewStyle)style 
+{
+	if (self = [super initWithStyle:style]) {
+		LogMethod();
+		[self reload];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reload) name:ReportManagerDownloadedDailyReportsNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reload) name:ReportManagerDownloadedReviewsNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateStatus) name:ReportManagerUpdatedReviewDownloadProgressNotification object:nil];
+	}
+    return self;
+}
+#else
 - (id)initWithStyle:(UITableViewStyle)style 
 {
 	if (self = [super initWithStyle:style]) {
@@ -28,7 +41,7 @@
 	}
     return self;
 }
-
+#endif
 - (void)reload
 {
 	NSArray *allApps = [[ReportManager sharedManager].appsByID allValues];
@@ -73,13 +86,12 @@
 	UIBarButtonItem *flexSpace = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
 	
 #ifdef COMPILE_OS221
-	UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0, 416.0, 320.0, 44.0)];
-	toolbar.frame = CGRectMake(0.0, 416.0, 320.0, 44.0);
-//	toolbar.barStyle = UIBarStyleBlackOpaque;
+	toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0, 368.0, 320.0, 48.0)];
 	toolbar.contentMode = UIViewContentModeScaleToFill;
 	toolbar.items = [NSArray arrayWithObjects:downloadButton, flexSpace, statusItem, flexSpace, activityItem, nil];
 //	[toolbar sizeToFit];
 	[self.view addSubview:toolbar];
+	[self.view bringSubviewToFront:toolbar];
 #else	
 	self.toolbarItems = [NSArray arrayWithObjects:downloadButton, flexSpace, statusItem, flexSpace, activityItem, nil];
 #endif
@@ -90,7 +102,10 @@
 	if ([[ReportManager sharedManager] isDownloadingReviews])
 		return;
 	
-#ifndef COMPILE_OS221
+#ifdef COMPILE_OS221
+	UIActionSheet *sheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Download Reviews",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel",nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Top Countries",nil), NSLocalizedString(@"All Countries",nil), nil] autorelease];
+	[sheet showFromToolbar:toolbar];
+#else
 	UIActionSheet *sheet = [[[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Download Reviews",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel",nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Top Countries",nil), NSLocalizedString(@"All Countries",nil), nil] autorelease];
 	[sheet showFromToolbar:self.navigationController.toolbar];
 #endif
