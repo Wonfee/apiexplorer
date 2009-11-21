@@ -38,7 +38,11 @@
 @synthesize graphColor;
 
 - (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier {
+#ifdef COMPILE_OS221
     if (self = [super initWithFrame:frame reuseIdentifier:reuseIdentifier]) {
+#else
+	if (self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier]) {
+#endif
 		UIColor *calendarBackgroundColor = [UIColor colorWithWhite:0.95 alpha:1.0];
 		UIView *calendarBackgroundView = [[[UIView alloc] initWithFrame:CGRectMake(0,0,45,44)] autorelease];
 		calendarBackgroundView.backgroundColor = calendarBackgroundColor;

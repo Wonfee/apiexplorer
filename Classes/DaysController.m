@@ -34,15 +34,51 @@
 #import "CountriesController.h"
 #import "RootViewController.h"
 #import "CurrencyManager.h"
+#import "ReportManager.h"
 
 @implementation DaysController
 
-- (id)initWithCoder:(NSCoder *)coder
+- (id)init
 {
-	[super initWithCoder:coder];
-	self.daysByMonth = [NSMutableArray array];
-	self.maxRevenue = 0;
+	[super init];
+	
+	[self reload];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reload) name:ReportManagerDownloadedDailyReportsNotification object:nil];
+	self.title = NSLocalizedString(@"Daily",nil);
+	
 	return self;
+}
+
+- (void)reload
+{
+	self.daysByMonth = [NSMutableArray array];
+	NSSortDescriptor *dateSorter = [[[NSSortDescriptor alloc] initWithKey:@"date" ascending:NO] autorelease];
+	NSArray *sortedDays = [[[ReportManager sharedManager].days allValues] sortedArrayUsingDescriptors:[NSArray arrayWithObject:dateSorter]];
+	int lastMonth = -1;
+
+	for (Day *d in sortedDays) {
+		NSDate *date = d.date;
+		NSDateComponents *components = [[NSCalendar currentCalendar] components:NSMonthCalendarUnit fromDate:date];
+		int month = [components month];
+		if (month != lastMonth) {
+			[daysByMonth addObject:[NSMutableArray array]];
+			lastMonth = month;
+		}
+		[[daysByMonth lastObject] addObject:d];
+	}
+	[self.tableView reloadData];
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath 
+{ 
+	if (editingStyle == UITableViewCellEditingStyleDelete) {
+		int section = [indexPath section];
+		int row = [indexPath row];
+		NSArray *selectedMonth = [self.daysByMonth objectAtIndex:section];
+		Day *selectedDay = [selectedMonth objectAtIndex:row];
+		[[ReportManager sharedManager] deleteDay:selectedDay];
+		[self reload];
+	}
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath 
@@ -53,8 +89,21 @@
     if (cell == nil) {
         cell = [[[DayCell alloc] initWithFrame:CGRectZero reuseIdentifier:CellIdentifier] autorelease];
     }
+
+	Day *day = [[self.daysByMonth objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
+	float revenue = [day totalRevenueInBaseCurrency];
+	if (revenue > self.maxRevenue) {
+		/* Got a new max revenue; we need to reload to update all already-displayed cells */
+		self.maxRevenue = revenue;
+		[[tableView class] cancelPreviousPerformRequestsWithTarget:tableView
+														  selector:@selector(reloadData)
+															object:nil];
+		[tableView performSelector:@selector(reloadData)
+						withObject:nil
+						afterDelay:0];
+	}
 	cell.maxRevenue = self.maxRevenue;
-    cell.day = [[self.daysByMonth objectAtIndex:[indexPath section]] objectAtIndex:[indexPath row]];
+	cell.day = day;
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	
     return cell;

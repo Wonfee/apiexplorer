@@ -37,7 +37,11 @@
 
 - (id)initWithFrame:(CGRect)frame reuseIdentifier:(NSString *)reuseIdentifier
 {
+#ifdef COMPILE_OS221
     if (self = [super initWithFrame:frame reuseIdentifier:reuseIdentifier]) {
+#else
+	if (self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier]) {
+#endif
 		UIColor *calendarBackgroundColor = [UIColor colorWithWhite:0.95 alpha:1.0];
 		UIView *calendarBackgroundView = [[[UIView alloc] initWithFrame:CGRectMake(0,0,45,44)] autorelease];
 		calendarBackgroundView.backgroundColor = calendarBackgroundColor;
@@ -67,7 +71,7 @@
 		
 		self.graphColor = [UIColor colorWithRed:0.54 green:0.61 blue:0.67 alpha:1.0];
 		
-		UIView *graphBackground = [[UIView alloc] initWithFrame:CGRectMake(160, 4, 130, 21)];
+		UIView *graphBackground = [[[UIView alloc] initWithFrame:CGRectMake(160, 4, 130, 21)] autorelease];
 		graphBackground.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1.0];
 		
 		graphView = [[[UIView alloc] initWithFrame:CGRectMake(160, 4, 130, 21)] autorelease];
