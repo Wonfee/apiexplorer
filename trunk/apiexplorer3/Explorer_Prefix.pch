@@ -1,0 +1,25 @@
+//
+// Prefix header for all source files of the 'Explorer' target in the 'Explorer' project
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_3_0
+//#warning "This project uses features only available in iPhone SDK 3.0 and later."
+#endif
+
+#ifdef __OBJC__
+	#import <Foundation/Foundation.h>
+	#import <UIKit/UIKit.h>
+#endif
+
+#define OS3
+
+#ifdef DEBUG_BUILD
+#define DEBUGLOG(x) x
+#define LogMethod()	NSLog(@"%@ %@", self, NSStringFromSelector(_cmd))
+#else
+#define DEBUGLOG(x)
+#define LogMethod()	
+#endif
+
