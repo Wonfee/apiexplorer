@@ -1,0 +1,23 @@
+iPhone API Explorer
+===================
+
+It should all just work if you Build and Go with Xcode.
+
+The code is offered under the terms of the GNU GPL v2, available at http://www.gnu.org/licenses/gpl-2.0.txt. A copy is included in COPYING.
+
+iPhone API Explorer 3.0
+=======================
+
+It is updated for iPhone OS 3.0
+
+compile and install in iphone gcc, run
+make install
+
+compile and install a debug version, run
+make -f Makefile.debug install
+
+You need the cydia package ldid to fake codesign in iphone gcc
+
+My blog is at http://iphonesdkdev.blogspot.com/
+
+explorer-3.0 updated and modified by javacom<javacomhk@yahoo.com>
