@@ -19,7 +19,6 @@
 @synthesize webView;
 
 
-
 -(void)loadView
 {	
 	UIView *contentView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -71,6 +70,13 @@
 @end
 
 
+#define FONT_SIZE 20.0f
+#define CELL_CONTENT_WIDTH 300.0f
+#define CELL_CONTENT_MARGIN 10.0f
+#define CELL_CONTENT_HEIGHT_MARGIN 2.0f
+#define MINIMUM_CELL_CONTENT_HEIGHT 40.0f
+
+
 
 @implementation MethodListController
 
@@ -94,9 +100,6 @@ enum sections {
 	return cls;
 }
 */
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return 40;
-}
 
 - (NSString *)superclassName {
 	return [[theCls superclass] description];
@@ -212,9 +215,33 @@ enum sections {
 
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+	NSArray *array = nil;
+        switch (indexPath.section) {
+                case s_superclass:
+			array = [NSArray arrayWithObject:[self superclassName]];
+                        break;
+                case s_protocols:
+                        array = protocols; break;
+                case s_ivars:
+                        array = ivars; break;
+                case s_cmeths:
+                        array = classMethods; break;
+                case s_imeths:
+                        array = instanceMethods; break;
+        }
+
+	NSString *text = [array objectAtIndex:[indexPath row]];
+	CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), 20000.0f);
+	CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:FONT_SIZE] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
+	CGFloat height = MAX(size.height, MINIMUM_CELL_CONTENT_HEIGHT);
+	return height + (CELL_CONTENT_HEIGHT_MARGIN * 2);
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {  
 	static NSString *MyIdentifier = @"MyIdentifier";
-	
+  	UILabel *label = nil;	
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
 	
 	NSArray *array = nil;
@@ -232,18 +259,32 @@ enum sections {
 		case s_imeths:
 			array = instanceMethods; break;
 	}
-	if(!cell)
+	if(!cell) {
 		cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:MyIdentifier] autorelease];
-	
-	if ( [cell respondsToSelector:@selector(setText:)] ) {
-		[cell setText:[array objectAtIndex:indexPath.row]];
+		label = [[UILabel alloc] initWithFrame:CGRectZero];
+		[label setLineBreakMode:UILineBreakModeWordWrap];
+		[label setMinimumFontSize:FONT_SIZE];
+		[label setNumberOfLines:0];
+		[label setFont:[UIFont systemFontOfSize:FONT_SIZE]];
+		[label setTag:1];
+//		[[label layer] setBorderWidth:2.0f];
+		[[cell contentView] addSubview:label];
 	}
-	else {
-		cell.textLabel.text =[array objectAtIndex:indexPath.row];
-	}
-	
+  NSString *text = [array objectAtIndex:[indexPath row]];
+ 
+  CGSize constraint = CGSizeMake(CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), 20000.0f);
+ 
+  CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:FONT_SIZE] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
+ 
+  if (!label)
+    label = (UILabel*)[cell viewWithTag:1];
+ 
+  [label setText:text];
+  [label setFrame:CGRectMake(CELL_CONTENT_MARGIN, CELL_CONTENT_HEIGHT_MARGIN, CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), MAX(size.height, MINIMUM_CELL_CONTENT_HEIGHT))];
+ 
 	return cell;
 }
+
 
 - (void)viewWillAppear:(BOOL)animated {
 	if([tview indexPathForSelectedRow]) {

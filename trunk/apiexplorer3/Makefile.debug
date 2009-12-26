@@ -11,25 +11,46 @@ LD=$(CC)
 SDK = /var/toolchain/sys30
 
 LDFLAGS = -arch arm -lobjc
+LDFLAGS += -framework AVFoundation
+LDFLAGS += -framework AddressBook
+LDFLAGS += -framework AddressBookUI
+LDFLAGS += -framework AudioToolbox
+//LDFLAGS += -framework AudioUnit
+LDFLAGS += -framework CFNetwork
+LDFLAGS += -framework CoreAudio
+LDFLAGS += -framework CoreData
 LDFLAGS += -framework CoreFoundation 
-LDFLAGS += -framework Foundation 
-LDFLAGS += -framework UIKit 
 LDFLAGS += -framework CoreGraphics
-//LDFLAGS += -framework AddressBookUI
-//LDFLAGS += -framework AddressBook
-//LDFLAGS += -framework QuartzCore
-//LDFLAGS += -framework GraphicsServices
-//LDFLAGS += -framework CoreSurface
-//LDFLAGS += -framework CoreAudio
-//LDFLAGS += -framework Celestial
-//LDFLAGS += -framework AudioToolbox
-//LDFLAGS += -framework WebCore
-//LDFLAGS += -framework WebKit
-//LDFLAGS += -framework SystemConfiguration
-//LDFLAGS += -framework CFNetwork
-//LDFLAGS += -framework MediaPlayer
-//LDFLAGS += -framework OpenGLES
-//LDFLAGS += -framework OpenAL
+LDFLAGS += -framework GraphicsServices
+LDFLAGS += -framework CoreGraphics
+LDFLAGS += -framework CoreLocation
+LDFLAGS += -framework ExternalAccessory
+LDFLAGS += -framework Foundation 
+LDFLAGS += -framework GameKit
+LDFLAGS += -framework IOKit
+LDFLAGS += -framework MapKit
+LDFLAGS += -framework MediaPlayer
+LDFLAGS += -framework MessageUI
+LDFLAGS += -framework MobileCoreServices
+LDFLAGS += -framework OpenAL
+LDFLAGS += -framework OpenGLES
+LDFLAGS += -framework QuartzCore
+LDFLAGS += -framework Security
+LDFLAGS += -framework StoreKit
+LDFLAGS += -framework System
+LDFLAGS += -framework SystemConfiguration
+LDFLAGS += -framework UIKit 
+LDFLAGS += -framework CoreSurface
+LDFLAGS += -framework GraphicsServices
+LDFLAGS += -framework Celestial
+LDFLAGS += -framework WebCore
+LDFLAGS += -framework WebKit
+LDFLAGS += -framework SpringBoardUI
+LDFLAGS += -framework TelephonyUI
+LDFLAGS += -framework JavaScriptCore
+LDFLAGS += -framework PhotoLibrary
+
+
 LDFLAGS += -L"$(SDK)/usr/lib"
 LDFLAGS += -F"$(SDK)/System/Library/Frameworks"
 LDFLAGS += -F"$(SDK)/System/Library/PrivateFrameworks"
@@ -101,7 +122,6 @@ endif
 install: dist
 	@rm -fr /Applications/$(INSTALLFOLDER)
 	cp -r $(BUILDDIR)/$(APPFOLDER) /Applications/$(INSTALLFOLDER)
-	@./respring
 	@echo "Application $(INSTALLFOLDER) installed, please respring device"
 
 uninstall:
