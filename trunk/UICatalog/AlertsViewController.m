@@ -372,11 +372,11 @@ enum AlertTableSections
 			{
 				IF_PRE_IOS3
 				(
-				    cell.text = @"Show Simple";
+				    cell.text = @"Show OK-Cancel";
 				)
 				IF_3_0_OR_GREATER
 				(
-				    cell.textLabel.text = @"Show Simple";
+				    cell.textLabel.text = @"Show OK-Cancel";
 				)
 			}
 			else
@@ -393,11 +393,11 @@ enum AlertTableSections
 			{
 				IF_PRE_IOS3
 				(
-				    cell.text = @"Show Simple";
+				    cell.text = @"Show Customized";
 				)
 				IF_3_0_OR_GREATER
 				(
-				    cell.textLabel.text = @"Show Simple";
+				    cell.textLabel.text = @"Show Customized";
 				)
 			}
 			else
@@ -435,11 +435,11 @@ enum AlertTableSections
 			{
 				IF_PRE_IOS3
 				(
-				    cell.text = @"Show Simple";
+				    cell.text = @"Show OK-Cancel";
 				)
 				IF_3_0_OR_GREATER
 				(
-				    cell.textLabel.text = @"Show Simple";
+				    cell.textLabel.text = @"Show OK-Cancel";
 				)
 			}						
 			else
@@ -456,11 +456,11 @@ enum AlertTableSections
 			{
 				IF_PRE_IOS3
 				(
-				    cell.text = @"Show Simple";
+				    cell.text = @"Show Customized";
 				)
 				IF_3_0_OR_GREATER
 				(
-				    cell.textLabel.text = @"Show Simple";
+				    cell.textLabel.text = @"Show Customized";
 				)
 			}						
 			else
