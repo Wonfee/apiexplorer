@@ -46,11 +46,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 */
 
 #import <UIKit/UIKit.h>
+#import "EditableTableViewCell.h"
 
 // cell identifier for this custom cell
 extern NSString *kSourceCell_ID;
 
-@interface SourceCell : UITableViewCell
+@interface SourceCell : EditableTableViewCell
 {
 	UILabel	*sourceLabel;
 }
