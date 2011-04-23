@@ -60,7 +60,11 @@ NSString *kDisplayCell_ID = @"DisplayCell_ID";
 
 - (id)initWithFrame:(CGRect)aRect reuseIdentifier:(NSString *)identifier
 {
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 30000
+	if (self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier])
+#else
 	if (self = [super initWithFrame:aRect reuseIdentifier:identifier])
+#endif
 	{
 		// turn off selection use
 		self.selectionStyle = UITableViewCellSelectionStyleNone;

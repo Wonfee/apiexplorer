@@ -268,7 +268,14 @@ static NSString *kCellIdentifier = @"MyIdentifier";
 		cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:kCellIdentifier] autorelease];
 	}
 	
-	cell.text = [[menuList objectAtIndex:indexPath.row] objectForKey:@"title"];
+	IF_PRE_IOS3
+	(
+		cell.text = [[menuList objectAtIndex:indexPath.row] objectForKey:@"title"];
+	)
+	IF_3_0_OR_GREATER
+	(
+		cell.textLabel.text = [[menuList objectAtIndex:indexPath.row] objectForKey:@"title"];
+	)
 	
 	return cell;
 }
