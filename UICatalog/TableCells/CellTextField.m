@@ -59,7 +59,11 @@ NSString *kCellTextField_ID = @"CellTextField_ID";
 
 - (id)initWithFrame:(CGRect)aRect reuseIdentifier:(NSString *)identifier
 {
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 30000
+	self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+#else
 	self = [super initWithFrame:aRect reuseIdentifier:identifier];
+#endif
 	if (self)
 	{
 		// turn off selection use
