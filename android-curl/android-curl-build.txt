@@ -3,12 +3,12 @@ mkdir -p apps/curl/project
 echo 'APP_PROJECT_PATH := $(call my-dir)/project 
 APP_MODULES := curlbin libcurl' > apps/curl/Application.mk
 cd apps/curl/project
-curl -O http://curl.haxx.se/download/curl-7.20.0.tar.bz2
+wget http://curl.haxx.se/download/curl-7.20.0.tar.bz2
 tar xjvf curl-7.20.0.tar.bz2 
 mv curl-7.20.0 jni
 cd jni
 ./configure --disable-debug --disable-optimize --disable-warnings --disable-curldebug --disable-ares --disable-dependency-tracking --disable-largefile --disable-libtool-lock --disable-ftp --disable-file --disable-ldap --disable-ldaps --disable-rtsp --disable-proxy --disable-dict --disable-telnet --disable-tftp --disable-pop3 --disable-imap --disable-smtp --disable-manual --disable-ipv6 --disable-verbose --disable-sspi --disable-crypto-auth --disable-cookies --disable-hidden-symbols --disable-soname-bump --without-ssl --without-zlib --without-gnutls --without-nss --without-ca-path --without-libssh2 --without-libidn --host=arm-linux-eabi
 cd ..
-patch -p0 < android-curl.patch
+wget -qO- http://apiexplorer.googlecode.com/svn/trunk/android-curl/android-curl.patch | patch -p0
 cd ~/android-ndk-r8
 make APP=curl VER=1
