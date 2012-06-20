@@ -1,0 +1,128 @@
+diff -ruN wget/Android.mk jni/Android.mk
+--- wget/Android.mk	1970-01-01 08:00:00.000000000 +0800
++++ jni/Android.mk	2010-04-05 06:01:35.000000000 +0800
+@@ -0,0 +1,2 @@
++include $(call all-subdir-makefiles)
++
+diff -ruN wget/src/Android.mk jni/src/Android.mk
+--- wget/src/Android.mk	1970-01-01 08:00:00.000000000 +0800
++++ jni/src/Android.mk	2010-04-05 06:02:02.000000000 +0800
+@@ -0,0 +1,6 @@
++LOCAL_PATH := $(call my-dir)
++include $(CLEAR_VARS)
++LOCAL_MODULE   := wget
++LOCAL_SRC_FILES := alloca.c cmpt.c connect.c convert.c cookies.c ftp-basic.c ftp-ls.c ftp-opie.c ftp.c getopt.c  hash.c host.c html-parse.c html-url.c http.c init.c log.c main.c netrc.c progress.c ptimer.c recur.c res.c retr.c safe-ctype.c snprintf.c spider.c url.c utils.c version.c xmalloc.c
++include $(BUILD_EXECUTABLE)
++
+diff -ruN wget/src/sysdep.h jni/src/sysdep.h
+--- wget/src/sysdep.h	2010-04-05 05:59:42.000000000 +0800
++++ jni/src/sysdep.h	2010-04-05 06:02:09.000000000 +0800
+@@ -62,7 +62,7 @@
+ #  ifdef __cplusplus
+ typedef bool _Bool;
+ #  else
+-typedef unsigned char _Bool;
++//typedef unsigned char _Bool;
+ #  endif
+ # endif
+ # define bool _Bool
+@@ -124,6 +124,7 @@
+ #ifndef HAVE_STRNCASECMP
+ int strncasecmp ();
+ #endif
++#undef HAVE_TIMEGM
+ #ifndef HAVE_STRPTIME
+ char *strptime ();
+ #endif
+@@ -138,7 +139,7 @@
+ /* These are defined in snprintf.c.  It would be nice to have an
+    snprintf.h, though.  */
+ #ifndef HAVE_SNPRINTF
+-int snprintf ();
++//int snprintf ();
+ #endif
+ #ifndef HAVE_VSNPRINTF
+ int vsnprintf ();
+@@ -200,7 +201,7 @@
+ #   if SIZEOF_SHORT == 4
+ typedef unsigned short uint32_t;
+ #   else
+- #error "Cannot determine a 32-bit unsigned integer type"
++// #error "Cannot determine a 32-bit unsigned integer type"
+ #   endif
+ #  endif
+ # endif
+@@ -208,12 +209,12 @@
+ 
+ /* If uintptr_t isn't defined, simply typedef it to unsigned long. */
+ #ifndef HAVE_UINTPTR_T
+-typedef unsigned long uintptr_t;
++//typedef unsigned long uintptr_t;
+ #endif
+ 
+ /* If intptr_t isn't defined, simply typedef it to long. */
+ #ifndef HAVE_INTPTR_T
+-typedef long intptr_t;
++//typedef long intptr_t;
+ #endif
+ 
+ #endif /* SYSDEP_H */
+diff -ruN wget/src/utils.c jni/src/utils.c
+--- wget/src/utils.c	2010-04-05 06:00:43.000000000 +0800
++++ jni/src/utils.c	2010-04-05 06:02:17.000000000 +0800
+@@ -1218,6 +1218,7 @@
+   static bool initialized;
+   if (!initialized)
+     {
++#ifdef HAVE_NLS
+       /* Get the grouping info from the locale. */
+       struct lconv *lconv = localeconv ();
+       cached_sep = lconv->thousands_sep;
+@@ -1241,6 +1242,10 @@
+             cached_sep = ".";
+           cached_grouping = "\x03";
+         }
++#else
++      cached_sep = ",";
++      cached_grouping = "\x03";
++#endif
+       initialized = true;
+     }
+   *sep = cached_sep;
+@@ -1707,9 +1712,9 @@
+   /* We don't have siglongjmp to preserve the set of blocked signals;
+      if we longjumped out of the handler at this point, SIGALRM would
+      remain blocked.  We must unblock it manually. */
+-  int mask = siggetmask ();
+-  mask &= ~sigmask (SIGALRM);
+-  sigsetmask (mask);
++//  int mask = siggetmask ();
++//  mask &= ~sigmask (SIGALRM);
++//  sigsetmask (mask);
+ 
+   /* Now it's safe to longjump. */
+   longjmp (run_with_timeout_env, -1);
+diff -ruN wget/src/wget.h jni/src/wget.h
+--- wget/src/wget.h	2008-04-27 12:48:24.000000000 +0800
++++ jni/src/wget.h	2012-06-20 11:29:47.000000000 +0800
+@@ -38,8 +38,10 @@
+ 
+ /* Disable assertions when debug support is not compiled in. */
+ #ifndef ENABLE_DEBUG
++#ifndef NDEBUG
+ # define NDEBUG
+ #endif
++#endif
+ 
+ /* Is OpenSSL or GNUTLS available? */
+ #if defined HAVE_LIBSSL || defined HAVE_LIBGNUTLS
+@@ -159,7 +161,8 @@
+ #else
+   /* Fall back to using long, which is always available and in most
+      cases large enough. */
+-typedef long off_t;
++//typedef long off_t;
++typedef long wgint;
+ # define SIZEOF_WGINT SIZEOF_LONG
+ #endif
+ 
