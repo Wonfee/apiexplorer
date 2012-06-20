@@ -1,0 +1,166 @@
+diff -ruN curl/lib/connect.c jni/lib/connect.c
+--- curl/lib/connect.c	2010-04-05 07:06:48.000000000 +0800
++++ jni/lib/connect.c	2010-04-05 07:07:57.000000000 +0800
+@@ -271,7 +271,7 @@
+   if(dev && (strlen(dev)<255) ) {
+ 
+     /* interface */
+-    if(Curl_if2ip(af, dev, myhost, sizeof(myhost))) {
++    if(0){
+       /*
+        * We now have the numerical IP address in the 'myhost' buffer
+        */
+diff -ruN curl/lib/url.c jni/lib/url.c
+--- curl/lib/url.c	2010-04-05 07:06:59.000000000 +0800
++++ jni/lib/url.c	2010-04-05 07:07:53.000000000 +0800
+@@ -2497,7 +2497,7 @@
+ #endif
+ #endif
+ 
+-  Curl_free_ssl_config(&conn->ssl_config);
++  //Curl_free_ssl_config(&conn->ssl_config);
+ 
+   free(conn); /* free all the connection oriented data */
+ }
+@@ -2926,6 +2926,7 @@
+         if(needle->protocol & PROT_SSL) {
+           /* This is SSL, verify that we're using the same
+              ssl options as well */
++/*
+           if(!Curl_ssl_config_matches(&needle->ssl_config,
+                                       &check->ssl_config)) {
+             DEBUGF(infof(data,
+@@ -2941,6 +2942,7 @@
+                          check->connectindex));
+             continue;
+           }
++*/
+         }
+         if((needle->protocol & PROT_FTP) ||
+            ((needle->protocol & PROT_HTTP) &&
+@@ -4454,7 +4456,7 @@
+ 
+   /* free the SSL config struct from this connection struct as this was
+      allocated in vain and is targeted for destruction */
+-  Curl_free_ssl_config(&old_conn->ssl_config);
++  //Curl_free_ssl_config(&old_conn->ssl_config);
+ 
+   conn->data = old_conn->data;
+ 
+@@ -4830,8 +4832,8 @@
+   data->set.ssl.egdsocket = data->set.str[STRING_SSL_EGDSOCKET];
+   data->set.ssl.cipher_list = data->set.str[STRING_SSL_CIPHER_LIST];
+ 
+-  if(!Curl_clone_ssl_config(&data->set.ssl, &conn->ssl_config))
+-    return CURLE_OUT_OF_MEMORY;
++  //if(!Curl_clone_ssl_config(&data->set.ssl, &conn->ssl_config))
++  //  return CURLE_OUT_OF_MEMORY;
+ 
+   /*************************************************************
+    * Check the current list of connections to see if we can
+diff -ruN jni/include/curl/curlbuild.h curl/include/curl/curlbuild.h
+--- jni/include/curl/curlbuild.h	2012-06-20 09:26:28.000000000 +0800
++++ curl/include/curl/curlbuild.h	2012-06-20 09:19:50.000000000 +0800
+@@ -154,7 +154,13 @@
+ #endif
+ 
+ /* The size of `long', as computed by sizeof. */
+-#define CURL_SIZEOF_LONG 8
++#ifdef __arch64__ 
++#define CURL_SIZEOF_LONG 8 
++#else 
++#define CURL_SIZEOF_LONG 4 
++#endif 
++
++/*#define CURL_SIZEOF_LONG 8*/
+ 
+ /* Integral data type used for curl_socklen_t. */
+ #define CURL_TYPEOF_CURL_SOCKLEN_T socklen_t
+@@ -181,7 +187,12 @@
+ #define CURL_FORMAT_OFF_T "%ld"
+ 
+ /* The size of `curl_off_t', as computed by sizeof. */
++#ifdef __arch64__ 
+ #define CURL_SIZEOF_CURL_OFF_T 8
++#else 
++#define CURL_SIZEOF_CURL_OFF_T 4
++#endif 
++/* #define CURL_SIZEOF_CURL_OFF_T 8 */
+ 
+ /* curl_off_t constant suffix. */
+ #define CURL_SUFFIX_CURL_OFF_T L
+diff -ruN jni/lib/curl_config.h curl/lib/curl_config.h
+--- jni/lib/curl_config.h	2012-06-20 09:25:59.000000000 +0800
++++ curl/lib/curl_config.h	2012-06-20 09:21:23.000000000 +0800
+@@ -185,7 +185,7 @@
+ #define HAVE_GETADDRINFO 1
+ 
+ /* Define to 1 if the getaddrinfo function is threadsafe. */
+-/* #undef HAVE_GETADDRINFO_THREADSAFE */
++#define HAVE_GETADDRINFO_THREADSAFE 1
+ 
+ /* Define to 1 if you have the `geteuid' function. */
+ #define HAVE_GETEUID 1
+@@ -472,10 +472,10 @@
+ /* #undef HAVE_PK11_CREATEGENERICOBJECT */
+ 
+ /* Define to 1 if you have a working poll function. */
+-#define HAVE_POLL 1
++/* #undef HAVE_POLL */
+ 
+ /* If you have a fine poll */
+-#define HAVE_POLL_FINE 1
++/* #undef HAVE_POLL_FINE */
+ 
+ /* Define to 1 if you have the <poll.h> header file. */
+ #define HAVE_POLL_H 1
+ 
+--- curl/src/Android.mk	1970-01-01 08:00:00.000000000 +0800
++++ jni/src/Android.mk	2012-06-20 09:55:18.000000000 +0800
+@@ -0,0 +1,7 @@
++LOCAL_PATH := $(call my-dir)
++include $(CLEAR_VARS)
++LOCAL_MODULE   := curl
++LOCAL_SRC_FILES = main.c hugehelp.c urlglob.c writeout.c writeenv.c \
++	getpass.c homedir.c curlutil.c os-specific.c
++include $(BUILD_EXECUTABLE)
++
+--- curl/Android.mk	2012-06-20 10:26:49.000000000 +0800
++++ jni/Android.mk	2012-06-20 10:28:56.000000000 +0800
+@@ -73,7 +73,7 @@
+ include $(LOCAL_PATH)/src/Makefile.inc
+ LOCAL_SRC_FILES := $(addprefix src/,$(CURL_SOURCES))
+ 
+-LOCAL_MODULE := curl
++LOCAL_MODULE := curlbin
+ LOCAL_STATIC_LIBRARIES := libcurl
+ LOCAL_SYSTEM_SHARED_LIBRARIES := libc
+ 
+--- curl/lib/if2ip.c	2012-06-20 09:22:05.000000000 +0800
++++ jni/lib/if2ip.c	2012-06-20 10:34:35.000000000 +0800
+@@ -45,13 +45,13 @@
+ #  include <netdb.h>
+ #endif
+ #ifdef HAVE_SYS_SOCKIO_H
+-#  include <sys/sockio.h>
++/*#  include <sys/sockio.h>*/
+ #endif
+ #ifdef HAVE_IFADDRS_H
+-#  include <ifaddrs.h>
++/*#  include <ifaddrs.h>*/
+ #endif
+ #ifdef HAVE_STROPTS_H
+-#  include <stropts.h>
++/*#  include <stropts.h>*/
+ #endif
+ #ifdef __VMS
+ #  include <inet.h>
+@@ -70,7 +70,7 @@
+ 
+ /* ------------------------------------------------------------------ */
+ 
+-#if defined(HAVE_GETIFADDRS)
++#if defined(HAVE_GETIFADDRS_)
+ 
+ char *Curl_if2ip(int af, const char *interface, char *buf, int buf_size)
+ {
