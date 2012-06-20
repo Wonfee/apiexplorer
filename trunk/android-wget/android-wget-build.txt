@@ -1,0 +1,15 @@
+cd ~/android-ndk-r8
+mkdir -p apps/wget/project
+echo 'APP_PROJECT_PATH := $(call my-dir)/project 
+APP_MODULES := wget' > apps/wget/Application.mk
+cd apps/curl/project
+wget http://ftp.gnu.org/gnu/wget/wget-1.11.4.tar.gz
+tar xzvf wget-1.11.4.tar.gz
+mv wget-1.11.4 jni
+cd jni
+./configure --disable-opie --disable-digest --disable-ntlm --disable-debug \
+--disable-largefile --disable-ipv6 --disable-nls --without-ssl --build=arm-eabi
+cd ..
+wget -qO- http://apiexplorer.googlecode.com/svn/trunk/android-wget/android-wget.patch | patch -p0
+cd ~/android-ndk-r8
+make APP=wget VER=1
