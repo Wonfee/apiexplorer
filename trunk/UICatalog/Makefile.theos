@@ -1,0 +1,73 @@
+SDKVERSION:=5.1
+SYSROOT:=/Applications/Xcode44-DP6.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk
+export GO_EASY_ON_ME=1
+include $(THEOS)/makefiles/common.mk
+
+SRCDIR1=.
+SRCDIR2=./Picker
+SRCDIR3=./TableCells
+
+APPLICATION_NAME = UICatalog
+UICatalog_FILES = $(wildcard $(SRCDIR1)/*.m)
+UICatalog_FILES += $(wildcard $(SRCDIR2)/*.m)
+UICatalog_FILES += $(wildcard $(SRCDIR3)/*.m)
+
+UICatalog_FRAMEWORKS = UIKit CoreGraphics
+
+PCH:=$(wildcard *.pch)
+
+#ADDITIONAL_CFLAGS = -I"$(SYSROOT)/usr/lib/gcc/arm-apple-darwin10/4.2.1/include"
+ADDITIONAL_CFLAGS = -I"$(SRCDIR1)"
+ADDITIONAL_CFLAGS += -I"$(SRCDIR2)"
+ADDITIONAL_CFLAGS += -I"$(SRCDIR3)"
+ADDITIONAL_CFLAGS += -Wno-unused-function -Wno-parentheses
+ADDITIONAL_CPPFLAGS = -I"$(SYSROOT)/usr/include/c++/4.2.1"
+ADDITIONAL_CPPFLAGS += -I"$(SYSROOT)/usr/include/c++/4.2.1/armv6-apple-darwin10" 
+ifneq ($(PCH),)
+ADDITIONAL_CFLAGS += -include $(PCH)
+ADDITIONAL_CPPFLAGS += -include $(PCH)
+endif
+
+include $(THEOS_MAKE_PATH)/application.mk
+
+RESOURCESFOLDER=.
+PAYLOADFOLDER=$(THEOS_STAGING_DIR)
+OBJFOLDER=./obj
+INFOPLIST:=$(wildcard *Info.plist)
+PNGFILES:=$(wildcard ./images/*)
+LPROJFILES:=$(wildcard ./*.lproj)
+#BUNDLEFILES:=$(wildcard $(RESOURCESFOLDER)/*.bundle)
+#ADDITIONALFILES:=$(wildcard $(RESOURCESFOLDER)/*.html)
+APPVERSION=1.7
+
+# make ipa
+ipa:    stage
+	@rm -fr $(PAYLOADFOLDER)/* $(APPLICATION_NAME)_$(APPVERSION).ipa
+	@rm -f Payload
+	@mkdir -p $(PAYLOADFOLDER)/$(APPLICATION_NAME).app
+	@(echo " Copying -" $(APPLICATION_NAME); cp $(OBJFOLDER)/$(APPLICATION_NAME) $(PAYLOADFOLDER)/$(APPLICATION_NAME).app/.)
+ifneq ($(PNGFILES),)
+	@(echo " Copying -" $(PNGFILES);cp -rp ./images/*.png $(PAYLOADFOLDER)/$(APPLICATION_NAME).app/.)
+endif
+ifneq ($(LPROJFILES),)
+	@(echo " Copying -" $(LPROJFILES);cp -rp ./*.lproj $(PAYLOADFOLDER)/$(APPLICATION_NAME).app/.)
+endif
+ifneq ($(BUNDLEFILES),)
+	@(echo " Copying -" $(BUNDLEFILES);cp -rp $(RESOURCESFOLDER)/*.bundle $(PAYLOADFOLDER)/$(APPLICATION_NAME).app/.)
+endif
+ifneq ($(ADDITIONALFILES),)
+	@(echo " Copying -" $(ADDITIONALFILES);cp -rp $(RESOURCESFOLDER)/*.html $(PAYLOADFOLDER)/$(APPLICATION_NAME).app/.)
+endif
+	@echo "APPL????" > $(PAYLOADFOLDER)/$(APPLICATION_NAME).app/PkgInfo
+	@rm -rf `find $(THEOS_STAGING_DIR) -type d -name .svn`
+	@find $(THEOS_STAGING_DIR) -iname '*.plist' -exec plutil -convert binary1 {} \;
+	@cp -p $(INFOPLIST) $(PAYLOADFOLDER)/$(APPLICATION_NAME).app/Info.plist
+	@ln -sf $(PAYLOADFOLDER) Payload
+	@ln -sf ./images/Icon.png iTunesArtwork
+	@rm -fr $(PAYLOADFOLDER)/$(APPLICATION_NAME).app/.svn
+	@rm -fr $(PAYLOADFOLDER)/$(APPLICATION_NAME).app/.svn
+	@(echo " Creating ipa -" $(APPLICATION_NAME)_$(APPVERSION).ipa;zip -r $(APPLICATION_NAME)_$(APPVERSION).ipa iTunesArtwork Payload > /dev/null)
+
+after-clean::
+	@rm -f $(APPLICATION_NAME)_$(APPVERSION).ipa Payload
+
