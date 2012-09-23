@@ -67,7 +67,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 {
     UILabel *label = [[[UILabel alloc] initWithFrame:frame] autorelease];
     
-	label.textAlignment = UITextAlignmentLeft;
+    IF_PRE_IOS6 (
+      label.textAlignment = UITextAlignmentCenter;
+    )
+    IF_IOS6_OR_GREATER (
+      label.textAlignment = NSTextAlignmentCenter;
+    )
     label.text = title;
     label.font = [UIFont boldSystemFontOfSize:17.0];
     label.textColor = [UIColor colorWithRed:76.0/255.0 green:86.0/255.0 blue:108.0/255.0 alpha:1.0];

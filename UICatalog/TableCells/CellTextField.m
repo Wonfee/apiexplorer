@@ -59,11 +59,7 @@ NSString *kCellTextField_ID = @"CellTextField_ID";
 
 - (id)initWithFrame:(CGRect)aRect reuseIdentifier:(NSString *)identifier
 {
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 30000
-	self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-#else
 	self = [super initWithFrame:aRect reuseIdentifier:identifier];
-#endif
 	if (self)
 	{
 		// turn off selection use
@@ -71,6 +67,18 @@ NSString *kCellTextField_ID = @"CellTextField_ID";
 	}
 	return self;
 }
+
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)identifier
+{
+	self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+	if (self)
+	{
+		// turn off selection use
+		self.selectionStyle = UITableViewCellSelectionStyleNone;
+	}
+	return self;
+}
+
 
 - (void)setView:(UITextField *)inView
 {

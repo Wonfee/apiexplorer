@@ -97,8 +97,17 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	navigationController = [[UINavigationController alloc] initWithRootViewController:navController];
 	[navController release];
 
+    
+    IF_PRE_IOS4(
 	// add the navigation controller's view to the window
 	[window addSubview: navigationController.view];
+    )
+    
+    IF_IOS4_OR_GREATER (
+    // Application windows are expected to have a root view controller at the end of application launch (iOS4 or greater)
+    [window setRootViewController:navigationController];
+    )
+    
 	[window makeKeyAndVisible];
 }
 

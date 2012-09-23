@@ -118,7 +118,13 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 						kLabelHeight);
 	UILabel *label = [[UILabel alloc] initWithFrame:frame];
     label.font = [UIFont systemFontOfSize:12.0];
-	label.textAlignment = UITextAlignmentCenter;
+
+    IF_PRE_IOS6 (
+      label.textAlignment = UITextAlignmentCenter;
+    )
+    IF_IOS6_OR_GREATER (
+      label.textAlignment = NSTextAlignmentCenter;
+    )
 	label.text = @"Duration";
 	label.textColor = [UIColor whiteColor];
 	label.backgroundColor = [UIColor clearColor];

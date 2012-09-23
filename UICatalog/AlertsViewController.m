@@ -276,15 +276,30 @@ enum AlertTableSections
 
 	if (cell == nil)
 	{
-		if (row == 0)
-		{
-			cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:kAlertCell_ID] autorelease];
-		}
-		else if (row == 1)
-		{
-			cell = [[[SourceCell alloc] initWithFrame:CGRectZero reuseIdentifier:kSourceCell_ID] autorelease];
+        if (row == 0) {
+            
+            IF_PRE_IOS3
+            (
+             cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:kAlertCell_ID] autorelease];
+             )
+            IF_3_0_OR_GREATER
+            (
+             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kAlertCell_ID] autorelease];
+             )
+        }
+        
+		else if (row == 1) {
+            IF_PRE_IOS3
+            (
+             cell = [[[SourceCell alloc] initWithFrame:CGRectZero reuseIdentifier:kSourceCell_ID] autorelease];
+             )
+            IF_3_0_OR_GREATER
+            (
+             cell = [[[SourceCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kSourceCell_ID] autorelease];
+             )
 			cell.selectionStyle = UITableViewCellSelectionStyleNone;
-		}
+        }
+
 	}
 	
 	return cell;

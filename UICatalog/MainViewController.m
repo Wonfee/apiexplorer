@@ -231,11 +231,13 @@ static NSString *kCellIdentifier = @"MyIdentifier";
 
 #pragma mark UITableView delegate methods
 
+IF_PRE_IOS3(
 // decide what kind of accesory view (to the far right) we will use
 - (UITableViewCellAccessoryType)tableView:(UITableView *)tableView accessoryTypeForRowWithIndexPath:(NSIndexPath *)indexPath
 {
 	return UITableViewCellAccessoryDisclosureIndicator;
 }
+)
 
 // tell our table how many sections or groups it will have (always 1 in our case)
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -265,7 +267,14 @@ static NSString *kCellIdentifier = @"MyIdentifier";
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
 	if (cell == nil)
 	{
-		cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:kCellIdentifier] autorelease];
+        IF_PRE_IOS3
+        (
+		   cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:kCellIdentifier] autorelease];
+        )
+        IF_3_0_OR_GREATER
+        (
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellIdentifier] autorelease];
+        )
 	}
 	
 	IF_PRE_IOS3
@@ -277,6 +286,11 @@ static NSString *kCellIdentifier = @"MyIdentifier";
 		cell.textLabel.text = [[menuList objectAtIndex:indexPath.row] objectForKey:@"title"];
 	)
 	
+    IF_3_0_OR_GREATER
+	(
+        cell.accessoryType =  UITableViewCellAccessoryDisclosureIndicator;
+    )
+
 	return cell;
 }
 

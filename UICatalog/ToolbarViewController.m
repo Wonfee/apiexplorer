@@ -204,7 +204,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	UILabel *label = [[UILabel alloc] initWithFrame:labelFrame];
     label.font = [UIFont systemFontOfSize: 12];
 	label.text = @"UIBarButtonItemStyle";
-	label.textAlignment = UITextAlignmentCenter;
+    IF_PRE_IOS6 (
+      label.textAlignment = UITextAlignmentCenter;
+    )
+    IF_IOS6_OR_GREATER (
+      label.textAlignment = NSTextAlignmentCenter;
+    )
 	label.textColor = [UIColor blackColor];
 	label.backgroundColor = [UIColor clearColor];
 	[self.view addSubview:label];
@@ -233,7 +238,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	label = [[UILabel alloc] initWithFrame:labelFrame];
     label.font = [UIFont systemFontOfSize: 12];
 	label.text = @"UIBarStyle";
-	label.textAlignment = UITextAlignmentCenter;
+    IF_PRE_IOS6 (
+      label.textAlignment = UITextAlignmentCenter;
+    )
+    IF_IOS6_OR_GREATER (
+      label.textAlignment = NSTextAlignmentCenter;
+    )
 	label.textColor = [UIColor blackColor];
 	label.backgroundColor = [UIColor clearColor];
 	[self.view addSubview:label];
@@ -248,7 +258,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	label = [[UILabel alloc] initWithFrame:labelFrame];
     label.font = [UIFont systemFontOfSize: 12];
 	label.text = @"UIBarButtonSystemItem";
-	label.textAlignment = UITextAlignmentCenter;
+    IF_PRE_IOS6 (
+      label.textAlignment = UITextAlignmentCenter;
+    )
+    IF_IOS6_OR_GREATER (
+      label.textAlignment = NSTextAlignmentCenter;
+    )
 	label.textColor = [UIColor blackColor];
 	label.backgroundColor = [UIColor clearColor];
 	[self.view addSubview:label];

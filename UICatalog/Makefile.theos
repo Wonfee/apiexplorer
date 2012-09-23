@@ -1,5 +1,4 @@
-SDKVERSION:=5.1
-SYSROOT:=/Applications/Xcode44-DP6.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk
+export ARCHS=armv7
 export GO_EASY_ON_ME=1
 include $(THEOS)/makefiles/common.mk
 
@@ -48,6 +47,7 @@ ipa:    stage
 	@(echo " Copying -" $(APPLICATION_NAME); cp $(OBJFOLDER)/$(APPLICATION_NAME) $(PAYLOADFOLDER)/$(APPLICATION_NAME).app/.)
 ifneq ($(PNGFILES),)
 	@(echo " Copying -" $(PNGFILES);cp -rp ./images/*.png $(PAYLOADFOLDER)/$(APPLICATION_NAME).app/.)
+	@(echo " Copying -" $(PNGFILES);cp -rp ./images/*.jpg $(PAYLOADFOLDER)/$(APPLICATION_NAME).app/.)
 endif
 ifneq ($(LPROJFILES),)
 	@(echo " Copying -" $(LPROJFILES);cp -rp ./*.lproj $(PAYLOADFOLDER)/$(APPLICATION_NAME).app/.)
