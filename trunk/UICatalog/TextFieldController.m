@@ -201,7 +201,14 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	
 	frame = CGRectMake(0.0, 0.0, 70.0, kLabelHeight);
 	UILabel *label = [[[UILabel alloc] initWithFrame:frame] autorelease];
-	label.textAlignment = UITextAlignmentRight;
+	
+    
+    IF_PRE_IOS6 (
+     label.textAlignment = UITextAlignmentRight;
+    )
+    IF_IOS6_OR_GREATER (
+     label.textAlignment = NSTextAlignmentRight;
+    )
     label.text = NSLocalizedString(@"LeftView", @"");
     label.font = [UIFont boldSystemFontOfSize:14.0];
     label.backgroundColor = [UIColor clearColor];
@@ -334,15 +341,30 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	
 	if (cell == nil)
 	{
-		if (row == 0)
-		{
-			cell = [[[CellTextField alloc] initWithFrame:CGRectZero reuseIdentifier:kCellTextField_ID] autorelease];
+        if (row == 0) {
+            
+            IF_PRE_IOS3
+            (
+             cell = [[[CellTextField alloc] initWithFrame:CGRectZero reuseIdentifier:kCellTextField_ID] autorelease];
+             )
+            IF_3_0_OR_GREATER
+            (
+             cell = [[[CellTextField alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellTextField_ID] autorelease];
+             )
 			((CellTextField *)cell).delegate = self;	// so we can detect when cell editing starts
-		}
-		else if (row == 1)
-		{
-			cell = [[[SourceCell alloc] initWithFrame:CGRectZero reuseIdentifier:kSourceCell_ID] autorelease];
-		}
+        }
+        
+		else if (row == 1) {
+            IF_PRE_IOS3
+            (
+             cell = [[[SourceCell alloc] initWithFrame:CGRectZero reuseIdentifier:kSourceCell_ID] autorelease];
+             )
+            IF_3_0_OR_GREATER
+            (
+             cell = [[[SourceCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kSourceCell_ID] autorelease];
+             )
+        }
+
 	}
 	
 	return cell;

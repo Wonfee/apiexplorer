@@ -225,7 +225,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 									kTextFieldHeight);
 	label = [[UILabel alloc] initWithFrame:labelFrame];
     label.font = [UIFont systemFontOfSize: 14];
-	label.textAlignment = UITextAlignmentCenter;
+    IF_PRE_IOS6 (
+      label.textAlignment = UITextAlignmentCenter;
+    )
+    IF_IOS6_OR_GREATER (
+      label.textAlignment = NSTextAlignmentCenter;
+    )
 	label.textColor = [UIColor whiteColor];
 	label.backgroundColor = [UIColor clearColor];
 	[self.view addSubview:label];
@@ -254,7 +259,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 							kTextFieldHeight);
 	segmentLabel = [[UILabel alloc] initWithFrame:labelFrame];
     segmentLabel.font = [UIFont systemFontOfSize: 14];
-	segmentLabel.textAlignment = UITextAlignmentCenter;
+    IF_PRE_IOS6 (
+      segmentLabel.textAlignment = UITextAlignmentCenter;
+    )
+    IF_IOS6_OR_GREATER (
+      segmentLabel.textAlignment = NSTextAlignmentCenter;
+    )
 	segmentLabel.textColor = [UIColor whiteColor];
 	segmentLabel.backgroundColor = [UIColor clearColor];
 	segmentLabel.hidden = YES;

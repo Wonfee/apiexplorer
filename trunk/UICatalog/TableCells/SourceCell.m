@@ -57,11 +57,7 @@ NSString *kSourceCell_ID = @"SourceCell_ID";
 
 - (id)initWithFrame:(CGRect)aRect reuseIdentifier:(NSString *)identifier
 {
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 30000
-	if (self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier])
-#else
 	if (self = [super initWithFrame:aRect reuseIdentifier:identifier])
-#endif
 	{
 		// turn off selection use
 		self.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -69,7 +65,12 @@ NSString *kSourceCell_ID = @"SourceCell_ID";
 		sourceLabel = [[UILabel alloc] initWithFrame:aRect];
 		sourceLabel.backgroundColor = [UIColor clearColor];
 		sourceLabel.opaque = NO;
-		sourceLabel.textAlignment = UITextAlignmentCenter;
+        IF_PRE_IOS6 (
+          sourceLabel.textAlignment = UITextAlignmentCenter;
+        )
+        IF_IOS6_OR_GREATER (
+          sourceLabel.textAlignment = NSTextAlignmentCenter;
+        )
 		sourceLabel.textColor = [UIColor grayColor];
 		sourceLabel.highlightedTextColor = [UIColor blackColor];
 		sourceLabel.font = [UIFont systemFontOfSize:12];
@@ -78,6 +79,32 @@ NSString *kSourceCell_ID = @"SourceCell_ID";
 	}
 	return self;
 }
+
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)identifier
+{
+	if (self = [super initWithStyle:style reuseIdentifier:identifier])
+    {
+		// turn off selection use
+		self.selectionStyle = UITableViewCellSelectionStyleNone;
+		
+		sourceLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+		sourceLabel.backgroundColor = [UIColor clearColor];
+		sourceLabel.opaque = NO;
+        IF_PRE_IOS6 (
+          sourceLabel.textAlignment = UITextAlignmentCenter;
+        )
+        IF_IOS6_OR_GREATER (
+          sourceLabel.textAlignment = NSTextAlignmentCenter;
+        )
+		sourceLabel.textColor = [UIColor grayColor];
+		sourceLabel.highlightedTextColor = [UIColor blackColor];
+		sourceLabel.font = [UIFont systemFontOfSize:12];
+		
+		[self.contentView addSubview:sourceLabel];
+    }
+	return self;
+}
+
 
 - (void)layoutSubviews
 {

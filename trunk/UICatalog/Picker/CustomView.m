@@ -75,6 +75,18 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	
 	yCoord = (self.bounds.size.height - MAIN_FONT_SIZE) / 2;
 	point = CGPointMake(10.0 + self.image.size.width + 10.0, yCoord);
+    IF_IOS6_OR_GREATER
+    (
+     [self.title drawAtPoint:point
+					forWidth:self.bounds.size.width
+					withFont:[UIFont systemFontOfSize:MAIN_FONT_SIZE]
+                 minFontSize:MIN_MAIN_FONT_SIZE
+              actualFontSize:NULL
+               lineBreakMode:NSLineBreakByTruncatingTail
+          baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
+    )
+    IF_PRE_IOS6
+    (
 	[self.title drawAtPoint:point
 					forWidth:self.bounds.size.width
 					withFont:[UIFont systemFontOfSize:MAIN_FONT_SIZE]
@@ -82,6 +94,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 					actualFontSize:NULL
 					lineBreakMode:UILineBreakModeTailTruncation
 					baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
+    )
 }
 
 - (void)dealloc

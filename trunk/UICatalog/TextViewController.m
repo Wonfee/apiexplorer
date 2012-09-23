@@ -193,10 +193,28 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		
 	if (cell == nil)
 	{
-		if (row == 0)
-			cell = [[[CellTextView alloc] initWithFrame:CGRectZero reuseIdentifier:kCellTextView_ID] autorelease];
-		else if (row == 1)
-			cell = [[[SourceCell alloc] initWithFrame:CGRectZero reuseIdentifier:kSourceCell_ID] autorelease];
+        if (row == 0) {
+            
+            IF_PRE_IOS3
+            (
+             cell = [[[CellTextView alloc] initWithFrame:CGRectZero reuseIdentifier:kCellTextView_ID] autorelease];
+             )
+            IF_3_0_OR_GREATER
+            (
+             cell = [[[CellTextView alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellTextView_ID] autorelease];
+             )
+        }
+        
+		else if (row == 1) {
+            IF_PRE_IOS3
+            (
+             cell = [[[SourceCell alloc] initWithFrame:CGRectZero reuseIdentifier:kSourceCell_ID] autorelease];
+             )
+            IF_3_0_OR_GREATER
+            (
+             cell = [[[SourceCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kSourceCell_ID] autorelease];
+             )
+        }
 	}
 	
 	return cell;
