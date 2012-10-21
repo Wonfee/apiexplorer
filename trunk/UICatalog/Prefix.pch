@@ -75,6 +75,18 @@
 #define kCFCoreFoundationVersionNumber_iOS_6_0 793
 #endif
 
+#ifndef NSTextAlignmentCenter
+#define NSTextAlignmentCenter UITextAlignmentCenter
+#endif
+#ifndef NSTextAlignmentLeft
+#define NSTextAlignmentLeft UITextAlignmentLeft
+#endif
+#ifndef NSTextAlignmentRight
+#define NSTextAlignmentRight UITextAlignmentRight
+#endif
+#ifndef NSLineBreakByTruncatingTail
+#define NSLineBreakByTruncatingTail UILineBreakModeTailTruncation
+#endif
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_6_0
 #define IF_IOS6_OR_GREATER(...) \
