@@ -90,7 +90,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
           baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
      )
     )
-#if __IPHONE_OS_VERSION_MAX_ALLOWED < __IPHONE_6_0
     IF_PRE_IOS6
     (
 	[self.title drawAtPoint:point
@@ -101,7 +100,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 					lineBreakMode:UILineBreakModeTailTruncation
 					baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
     )
-#endif
 }
 
 - (void)dealloc
