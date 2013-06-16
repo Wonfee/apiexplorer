@@ -62,6 +62,7 @@ enum AlertTableSections
 	kUIAlert_Simple_Section,
 	kUIAlert_OKCancel_Section,
 	kUIAlert_Custom_Section,
+    kUIAlert_SecureText_Section
 };
 
 @synthesize myTableView;
@@ -152,6 +153,20 @@ enum AlertTableSections
 	[alert release];
 }
 
+- (void)alertSecureTextAction
+{
+  IF_IOS5_OR_GREATER (
+	// open an alert with two custom buttons
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"UIAlertView"
+                                                    message:@"UIAlertView"
+                                                   delegate:self
+                                          cancelButtonTitle:@"Cancel"
+                                          otherButtonTitles:@"OK", nil];
+	alert.alertViewStyle = UIAlertViewStyleSecureTextInput;
+    [alert show];
+	[alert release];
+  )
+}
 
 #pragma mark - UIActionSheetDelegate
 
@@ -160,11 +175,11 @@ enum AlertTableSections
 	// the user clicked one of the OK/Cancel buttons
 	if (buttonIndex == 0)
 	{
-		NSLog(@"ok");
+		DLog(@"ok");
 	}
 	else
 	{
-		NSLog(@"cancel");
+		DLog(@"cancel");
 	}
 	
 	[myTableView deselectRowAtIndexPath:[myTableView indexPathForSelectedRow] animated:NO];
@@ -191,7 +206,10 @@ enum AlertTableSections
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-	return 6;
+    if (IS_IOS_OR_NEWER(IOS_5_0))
+	    return 7;
+    else
+        return 6;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -225,6 +243,11 @@ enum AlertTableSections
 			break;
 		}
 		case kUIAlert_Custom_Section:
+		{
+			title = @"UIAlertView";
+			break;
+		}
+		case kUIAlert_SecureText_Section:
 		{
 			title = @"UIAlertView";
 			break;
@@ -345,6 +368,12 @@ enum AlertTableSections
 			case kUIAlert_Custom_Section:
 			{
 				[self alertOtherAction];	
+				break;
+			}
+                
+			case kUIAlert_SecureText_Section:
+			{
+				[self alertSecureTextAction];
 				break;
 			}
 		}
@@ -485,6 +514,28 @@ enum AlertTableSections
 			}
 			break;
 		}
+            
+		case kUIAlert_SecureText_Section:
+		{
+			if (row == 0)
+			{
+				IF_PRE_IOS3
+				(
+                 cell.text = @"Secure Text Input";
+                 )
+				IF_3_0_OR_GREATER
+				(
+                 cell.textLabel.text = @"Secure Text Input";
+                 )
+			}
+			else
+			{
+				// this cell hosts the info on where to find the code
+				((SourceCell *)cell).sourceLabel.text = @"AlertsViewController.m - alertSecureTextAction";
+			}
+			break;
+		}
+
 	}
 	
 	return cell;

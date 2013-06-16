@@ -99,7 +99,31 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     textView.delegate = self;
     textView.backgroundColor = [UIColor whiteColor];
 	
+    IF_PRE_IOS4(
 	textView.text = @"Now is the time for all good developers to come to serve their country.\n\nNow is the time for all good developers to come to serve their country.";
+    )
+    
+    IF_IOS4_OR_GREATER(
+    NSString *textToAdd = @"Now is the time for all good developers to come to serve their country.\n\nNow is the time for all good developers to come to serve their country.\r\rThis text view can also use attributed strings.";
+    
+    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:textToAdd];
+    
+    // make red text
+    [attrString addAttribute:NSForegroundColorAttributeName
+                       value:[UIColor redColor]
+                       range:NSMakeRange([attrString length] - 19, 19)];
+    
+    // make blue text
+    [attrString addAttribute:NSForegroundColorAttributeName
+                       value:[UIColor blueColor]
+                       range:NSMakeRange([attrString length] - 23, 3)];
+    [attrString addAttribute:NSUnderlineStyleAttributeName
+                       value:[NSNumber numberWithInteger:1]
+                       range:NSMakeRange([attrString length] - 23, 3)];
+    
+    [textView setAttributedText:attrString];
+    )
+    
 	textView.returnKeyType = UIReturnKeyDefault;
 	textView.keyboardType = UIKeyboardTypeDefault;	// use the default type input method (entire keyboard)
 	

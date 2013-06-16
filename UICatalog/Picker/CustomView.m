@@ -59,7 +59,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 {
 	if (self = [super initWithFrame:frame])
 	{
-		self.frame = CGRectMake(0.0, 0.0, 200.0, 44.0);	// we know the frame size
+        self.frame = CGRectMake(0.0, 0.0, 200.0+(IS_IOS_OR_NEWER(IOS_7_0)?100.0:0.0), 44.0);	// we know the frame size
 		self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		self.backgroundColor = [UIColor clearColor];	// make the background transparent
 	}
@@ -77,6 +77,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	point = CGPointMake(10.0 + self.image.size.width + 10.0, yCoord);
     IF_IOS6_OR_GREATER
     (
+     IF_IOS7_OR_GREATER(
+                        [self.title drawAtPoint:point withAttributes:nil];
+     )
+     IF_PRE_IOS7(
      [self.title drawAtPoint:point
 					forWidth:self.bounds.size.width
 					withFont:[UIFont systemFontOfSize:MAIN_FONT_SIZE]
@@ -84,7 +88,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
               actualFontSize:NULL
                lineBreakMode:NSLineBreakByTruncatingTail
           baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
+     )
     )
+#if __IPHONE_OS_VERSION_MAX_ALLOWED < __IPHONE_6_0
     IF_PRE_IOS6
     (
 	[self.title drawAtPoint:point
@@ -95,6 +101,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 					lineBreakMode:UILineBreakModeTailTruncation
 					baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
     )
+#endif
 }
 
 - (void)dealloc

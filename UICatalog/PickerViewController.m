@@ -140,9 +140,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	customPickerView.frame = [self pickerFrameWithSize:pickerSize];
 	
 	customPickerView.showsSelectionIndicator = YES;
-	
+    	
 	// add this picker to our view controller, initially hidden
 	customPickerView.hidden = YES;
+    customPickerView.backgroundColor = [UIColor clearColor];
 	[self.view addSubview:customPickerView];
 }
 
@@ -178,7 +179,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 									[NSArray arrayWithObjects:@"UIPicker", @"UIDatePicker", @"Custom", nil]];
 	[buttonBarSegmentedControl addTarget:self action:@selector(togglePickers:) forControlEvents:UIControlEventValueChanged];
 	buttonBarSegmentedControl.selectedSegmentIndex = 0.0;	// start by showing the normal picker
-	buttonBarSegmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+    IF_PRE_IOS7(
+        buttonBarSegmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+    )
     buttonBarSegmentedControl.tintColor = [UIColor darkGrayColor];
 	buttonBarSegmentedControl.backgroundColor = [UIColor clearColor];
 
@@ -205,7 +208,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	
 	// setup our parent content view and embed it to your view controller
 	UIView *contentView = [[UIView alloc] initWithFrame:screenRect];
-	contentView.backgroundColor = [UIColor blackColor];
+    if (IS_IOS_OR_NEWER(IOS_7_0))
+        contentView.backgroundColor = [UIColor whiteColor];
+    else
+        contentView.backgroundColor = [UIColor blackColor];
+
 	contentView.autoresizesSubviews = YES;
 	contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	
@@ -220,7 +227,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	
 	// label for picker selection output, place it right above the picker
 	CGRect labelFrame = CGRectMake(	kLeftMargin,
-									myPickerView.frame.origin.y - kTextFieldHeight,
+									myPickerView.frame.origin.y - kTextFieldHeight *(IS_IOS_OR_NEWER(IOS_7_0)?2:1),
 									self.view.bounds.size.width - (kRightMargin * 2.0),
 									kTextFieldHeight);
 	label = [[UILabel alloc] initWithFrame:labelFrame];
@@ -231,7 +238,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     IF_IOS6_OR_GREATER (
       label.textAlignment = NSTextAlignmentCenter;
     )
-	label.textColor = [UIColor whiteColor];
+    if (IS_IOS_OR_NEWER(IOS_7_0))
+        label.textColor = [UIColor blackColor];
+    else
+        label.textColor = [UIColor whiteColor];
 	label.backgroundColor = [UIColor clearColor];
 	[self.view addSubview:label];
 	
@@ -239,7 +249,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	pickerStyleSegmentedControl = [[UISegmentedControl alloc] initWithItems:
 										[NSArray arrayWithObjects:@"1", @"2", @"3", @"4", nil]];
 	[pickerStyleSegmentedControl addTarget:self action:@selector(togglePickerStyle:) forControlEvents:UIControlEventValueChanged];
-	pickerStyleSegmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+    IF_PRE_IOS7(
+	  pickerStyleSegmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+    )
 	pickerStyleSegmentedControl.tintColor = [UIColor darkGrayColor];
     pickerStyleSegmentedControl.backgroundColor = [UIColor clearColor];
 	[pickerStyleSegmentedControl sizeToFit];
@@ -254,7 +266,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	
 	// create the selection label for our UIDatePicker segmented control
 	labelFrame = CGRectMake(0,
-							kTopMargin,
+							kTopMargin / (IS_IOS_OR_NEWER(IOS_7_0)?2:1),
 							self.view.bounds.size.width,
 							kTextFieldHeight);
 	segmentLabel = [[UILabel alloc] initWithFrame:labelFrame];
@@ -265,9 +277,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     IF_IOS6_OR_GREATER (
       segmentLabel.textAlignment = NSTextAlignmentCenter;
     )
-	segmentLabel.textColor = [UIColor whiteColor];
-	segmentLabel.backgroundColor = [UIColor clearColor];
-	segmentLabel.hidden = YES;
+    if (IS_IOS_OR_NEWER(IOS_7_0))
+        segmentLabel.textColor = [UIColor blackColor];
+    else
+        segmentLabel.textColor = [UIColor whiteColor];
+    segmentLabel.backgroundColor = [UIColor clearColor];
+    segmentLabel.hidden = YES;
 	[self.view addSubview:segmentLabel];
 	
 	// start by showing the normal picker
@@ -337,6 +352,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		{
 			pickerStyleSegmentedControl.hidden = YES;
 			segmentLabel.hidden = YES;
+            label.hidden = NO;
 			[self showPicker:myPickerView];
 			break;
 		}
@@ -348,6 +364,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 			pickerStyleSegmentedControl.selectedSegmentIndex = 0.0;
 			pickerStyleSegmentedControl.hidden = NO;
 			segmentLabel.hidden = NO;
+            label.hidden = YES;
 			[self showPicker:datePickerView];
 			break;
 		}
@@ -356,7 +373,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		{
 			pickerStyleSegmentedControl.hidden = YES;
 			segmentLabel.hidden = YES;
-			[self showPicker:customPickerView];	
+            label.hidden = YES;
+			[self showPicker:customPickerView];
 			break;
 		}
 	}
