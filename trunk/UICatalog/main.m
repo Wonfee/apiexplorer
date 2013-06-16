@@ -2,7 +2,7 @@
 //  main.m
 //  UICatalog
 //
-//  Created by CK on 23/9/12.
+//  Created on 23/9/12.
 //
 //
 

@@ -106,7 +106,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 						kSegmentedControlHeight);
 	segmentedControl.frame = frame;
 	[segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
-	segmentedControl.segmentedControlStyle = UISegmentedControlStylePlain;
+    IF_PRE_IOS7(
+  	  segmentedControl.segmentedControlStyle = UISegmentedControlStylePlain;
+    )
 	segmentedControl.selectedSegmentIndex = 1;	
 	[self.view addSubview:segmentedControl];
 	[segmentedControl release];
@@ -130,7 +132,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 						kSegmentedControlHeight);
 	segmentedControl.frame = frame;
 	[segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
-	segmentedControl.segmentedControlStyle = UISegmentedControlStyleBordered;
+    IF_PRE_IOS7(
+  	  segmentedControl.segmentedControlStyle = UISegmentedControlStyleBordered;
+    )
 	segmentedControl.selectedSegmentIndex = 1;
 	
 	[self.view addSubview:segmentedControl];
@@ -155,7 +159,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 					   kSegmentedControlHeight);
 	segmentedControl.frame = frame;
 	[segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
-	segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+    IF_PRE_IOS7(
+	  segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+    )
 	segmentedControl.selectedSegmentIndex = 1;
 	
 	[self.view addSubview:segmentedControl];
@@ -180,7 +186,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 						kSegmentedControlHeight);
 	segmentedControl.frame = frame;
 	[segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
-	segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;	
+    IF_PRE_IOS7(
+	  segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+    )
 	segmentedControl.tintColor = [UIColor colorWithRed:0.70 green:0.171 blue:0.1 alpha:1.0];
 	segmentedControl.selectedSegmentIndex = 1;
 	

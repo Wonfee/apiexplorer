@@ -96,6 +96,7 @@ static NSString *kCellIdentifier = @"MyIdentifier";
 	
 	// for showing various UIButtons:
 	ButtonsViewController *buttonsViewController = [[ButtonsViewController alloc] init];
+    if (IS_IOS_OR_NEWER(IOS_7_0)) buttonsViewController.edgesForExtendedLayout = UIExtendedEdgeNone;
 	[menuList addObject:[NSDictionary dictionaryWithObjectsAndKeys:
 						 NSLocalizedString(@"ButtonsTitle", @""), @"title",
 						 buttonsViewController, @"viewController",
@@ -104,6 +105,7 @@ static NSString *kCellIdentifier = @"MyIdentifier";
 	
 	// for showing various UIControls:
 	ControlsViewController *controlsViewController = [[ControlsViewController alloc] init];
+    if (IS_IOS_OR_NEWER(IOS_7_0)) controlsViewController.edgesForExtendedLayout = UIExtendedEdgeNone;
 	[menuList addObject:[NSDictionary dictionaryWithObjectsAndKeys:
 						 NSLocalizedString(@"ControlsTitle", @""), @"title",
 						 controlsViewController, @"viewController",
@@ -112,6 +114,7 @@ static NSString *kCellIdentifier = @"MyIdentifier";
 	
 	// for showing various UITextFields:
 	TextFieldController *textFieldViewController = [[TextFieldController alloc] init];
+    if (IS_IOS_OR_NEWER(IOS_7_0)) textFieldViewController.edgesForExtendedLayout = UIExtendedEdgeNone;
 	[menuList addObject:[NSDictionary dictionaryWithObjectsAndKeys:
 						 NSLocalizedString(@"TextFieldTitle", @""), @"title",
 						 textFieldViewController, @"viewController",
@@ -120,6 +123,7 @@ static NSString *kCellIdentifier = @"MyIdentifier";
 	
 	// for showing various UITextFields:
 	SearchBarController *searchBarController = [[SearchBarController alloc] init];
+    if (IS_IOS_OR_NEWER(IOS_7_0)) searchBarController.edgesForExtendedLayout = UIExtendedEdgeNone;
 	[menuList addObject:[NSDictionary dictionaryWithObjectsAndKeys:
 						 NSLocalizedString(@"SearchBarTitle", @""), @"title",
 						 searchBarController, @"viewController",
@@ -128,6 +132,7 @@ static NSString *kCellIdentifier = @"MyIdentifier";
 	
 	// for showing UITextView:
 	TextViewController *textViewController = [[TextViewController alloc] init];
+    if (IS_IOS_OR_NEWER(IOS_7_0)) textViewController.edgesForExtendedLayout = UIExtendedEdgeNone;
 	[menuList addObject:[NSDictionary dictionaryWithObjectsAndKeys:
 						 NSLocalizedString(@"TextViewTitle", @""), @"title",
 						 textViewController, @"viewController",
@@ -136,6 +141,7 @@ static NSString *kCellIdentifier = @"MyIdentifier";
 	
 	// for showing various UIPickers:
 	PickerViewController *pickerViewController = [[PickerViewController alloc] init];
+    if (IS_IOS_OR_NEWER(IOS_7_0)) pickerViewController.edgesForExtendedLayout = UIExtendedEdgeNone;
 	[menuList addObject:[NSDictionary dictionaryWithObjectsAndKeys:
 						 NSLocalizedString(@"PickerTitle", @""), @"title",
 						 pickerViewController, @"viewController",
@@ -144,6 +150,7 @@ static NSString *kCellIdentifier = @"MyIdentifier";
 	
 	// for showing UIImageView:
 	ImagesViewController *imagesViewController = [[ImagesViewController alloc] init];
+    if (IS_IOS_OR_NEWER(IOS_7_0)) imagesViewController.edgesForExtendedLayout = UIExtendedEdgeNone;
 	[menuList addObject:[NSDictionary dictionaryWithObjectsAndKeys:
 						 NSLocalizedString(@"ImagesTitle", @""), @"title",
 						 imagesViewController, @"viewController",
@@ -152,6 +159,7 @@ static NSString *kCellIdentifier = @"MyIdentifier";
 	
 	// for showing UIWebView:
 	WebViewController *webViewController = [[WebViewController alloc] init];
+    if (IS_IOS_OR_NEWER(IOS_7_0)) webViewController.edgesForExtendedLayout = UIExtendedEdgeNone;
 	[menuList addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:
 						 NSLocalizedString(@"WebTitle", @""), @"title",
 						 webViewController, @"viewController",
@@ -160,6 +168,7 @@ static NSString *kCellIdentifier = @"MyIdentifier";
 	
 	// for showing various UISegmentedControls:
 	SegmentViewController *segmentViewController = [[SegmentViewController alloc] init];
+    if (IS_IOS_OR_NEWER(IOS_7_0)) segmentViewController.edgesForExtendedLayout = UIExtendedEdgeNone;
 	[menuList addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:
 						 NSLocalizedString(@"SegmentTitle", @""), @"title",
 						 segmentViewController, @"viewController",
@@ -168,6 +177,7 @@ static NSString *kCellIdentifier = @"MyIdentifier";
 	
 	// for showing various UIBarButtonItem items inside a UIToolbar:
 	ToolbarViewController *toolbarViewController = [[ToolbarViewController alloc] init];
+    if (IS_IOS_OR_NEWER(IOS_7_0)) toolbarViewController.edgesForExtendedLayout = UIExtendedEdgeNone;
 	[menuList addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:
 						 NSLocalizedString(@"ToolbarTitle", @""), @"title",
 						 toolbarViewController, @"viewController",
@@ -176,6 +186,7 @@ static NSString *kCellIdentifier = @"MyIdentifier";
 	
 	// for showing various UIActionSheets and UIAlertViews:
 	AlertsViewController *alertsViewController = [[AlertsViewController alloc] init];
+//    if (IS_IOS_OR_NEWER(IOS_7_0)) alertsViewController.edgesForExtendedLayout = UIExtendedEdgeNone;
 	[menuList addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:
 						 NSLocalizedString(@"AlertTitle", @""), @"title",
 						 alertsViewController, @"viewController",
@@ -184,6 +195,7 @@ static NSString *kCellIdentifier = @"MyIdentifier";
 	
 	// for showing how to a use flip animation transition between two UIViews:
 	TransitionsViewController *transitionsViewController = [[TransitionsViewController alloc] init];
+    if (IS_IOS_OR_NEWER(IOS_7_0)) transitionsViewController.edgesForExtendedLayout = UIExtendedEdgeNone;
 	[menuList addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:
 						 NSLocalizedString(@"TransitionsTitle", @""), @"title",
 						 transitionsViewController, @"viewController",

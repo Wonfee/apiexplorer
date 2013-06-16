@@ -183,7 +183,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	styleSegmentedControl = [[UISegmentedControl alloc] initWithItems:
 												[NSArray arrayWithObjects:@"Plain", @"Bordered", @"Done", nil]];
 	[styleSegmentedControl addTarget:self action:@selector(toggleStyle:) forControlEvents:UIControlEventValueChanged];
-	styleSegmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+    IF_PRE_IOS7(
+	  styleSegmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+    )
     styleSegmentedControl.backgroundColor = [UIColor clearColor];
 	[styleSegmentedControl sizeToFit];
 	styleSegmentedControl.selectedSegmentIndex = 0;
@@ -220,7 +222,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:
 											[NSArray arrayWithObjects:@"Default", @"Black", @"Translucent", nil]];
 	[segmentedControl addTarget:self action:@selector(toggleBarStyle:) forControlEvents:UIControlEventValueChanged];
-	segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+    IF_PRE_IOS7(
+	  segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+    )
     segmentedControl.backgroundColor = [UIColor clearColor];
 	[segmentedControl sizeToFit];
 	segmentedControl.selectedSegmentIndex = 0;
