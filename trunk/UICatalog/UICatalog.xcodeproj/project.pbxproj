@@ -63,6 +63,9 @@
 		1DC4B2650D05D9C8003A8154 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		43F16D45176E3E2200CF6575 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		43F16D46176E3E2200CF6575 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		43F16D47176E3E3F00CF6575 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		5303E5EE0D6B565A00549676 /* CustomPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomPicker.h; path = Picker/CustomPicker.h; sourceTree = "<group>"; };
 		5303E6010D6B565A00549676 /* CustomPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomPicker.m; path = Picker/CustomPicker.m; sourceTree = "<group>"; };
 		5309867F0DE753E300CC7C10 /* blueButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueButton.png; sourceTree = "<group>"; };
@@ -279,6 +282,9 @@
 				53C36F9E0D78679000E6AABE /* segment_tools.png */,
 				53C36F9F0D78679000E6AABE /* segment_search.png */,
 				53C36FA00D78679000E6AABE /* segment_check.png */,
+				43F16D45176E3E2200CF6575 /* Default@2x.png */,
+				43F16D47176E3E3F00CF6575 /* Default-568h@2x.png */,
+				43F16D46176E3E2200CF6575 /* Icon@2x.png */,
 				536493E30D73B63F0048BD96 /* Default.png */,
 				53CFC0750D62591400422A0E /* scene1.jpg */,
 				53CFC0760D62591400422A0E /* scene2.jpg */,

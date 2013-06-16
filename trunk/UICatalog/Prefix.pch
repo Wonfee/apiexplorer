@@ -96,6 +96,8 @@ __VA_ARGS__ \
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_7_0
 #define IF_PRE_IOS7(...)
+#elif __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_7_0
+#define IF_PRE_IOS7(...)
 #else
 #define IF_PRE_IOS7(...) \
 if (kCFCoreFoundationVersionNumber < kCFCoreFoundationVersionNumber_IOS_7_0) \
@@ -116,6 +118,8 @@ __VA_ARGS__ \
 #endif
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_6_0
+#define IF_PRE_IOS6(...)
+#elif __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_6_0
 #define IF_PRE_IOS6(...)
 #else
 #define IF_PRE_IOS6(...) \
@@ -138,6 +142,8 @@ __VA_ARGS__ \
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_5_0
 #define IF_PRE_IOS5(...)
+#elif __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_5_0
+#define IF_PRE_IOS5(...)
 #else
 #define IF_PRE_IOS5(...) \
 if (kCFCoreFoundationVersionNumber < kCFCoreFoundationVersionNumber_IOS_5_0) \
@@ -157,6 +163,8 @@ __VA_ARGS__ \
 #endif
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_4_0
+#define IF_PRE_IOS4(...)
+#elif __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_4_0
 #define IF_PRE_IOS4(...)
 #else
 #define IF_PRE_IOS4(...) \
@@ -199,6 +207,8 @@ __VA_ARGS__ \
 
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_3_0
+#define IF_PRE_IOS3(...)
+#elif __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_3_0
 #define IF_PRE_IOS3(...)
 #else
 #define IF_PRE_IOS3(...) \
